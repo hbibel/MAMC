@@ -71,9 +71,9 @@ def _lex(input_string):
     token_list = []
     tmp = ''
     for c in input_string:
-        if c not in ' ()':
+        if c not in ' ()!':
             tmp += str(c)
-        elif c in '()':
+        elif c in '()!':
             if len(tmp) > 0:
                 token_list.append(tmp)
                 tmp = ''
@@ -153,9 +153,3 @@ def _find_outer(tokens, token_list):
         if token_list[i] == ')':
             depth -= 1
     return token_list, None, None
-
-#print(_find_outer('UR', ['a', 'U', '(', 'b', '|', 'c', ')', 'R', 'd']))
-#print(parse('(a | b) U (b U (a & !b))'))
-#ltl = parse('!(a U b) | (a & (!(X b)))')
-#print(ltl)
-#print(ltl.toNNF())

@@ -2,6 +2,7 @@
 
 from math import pi, sin, cos
 from rectangle import Rectangle
+from interpretations import interpretation
 
 
 """
@@ -19,15 +20,19 @@ straight maneuvers have a length of 5
 
 
 class MA(object):
-    def __init__(self):
+    def __init__(self, init_position=(0.0, 0.0)):
         go_straight = MA.ManeuverType("straight")
         left_turn = MA.ManeuverType("left")
         right_turn = MA.ManeuverType("right")
         self.maneuver_types = [go_straight, left_turn, right_turn]
         self.transitions = None
-        self.initial_state = None
+        self.initial_state = MA.Maneuver(go_straight)
         self.accepting_states = None
         self.orientation = None
+        self.position = init_position
+
+    def get_discrete_state(self):
+        return (self.position, self.orientation)
 
     class ManeuverType(object):
         def __init__(self, name):
@@ -50,6 +55,10 @@ class MA(object):
                              0.5, 0.5)
 
         def overall_occupancy(self):
+            """
+            Returns a rectangle that overapproximates the occupancy of the
+            maneuver
+            """
             orientation = self.initial_orientation
             start_pos = self.starting_position
             # We overapproximate the occupancy by a rectangle
@@ -113,5 +122,21 @@ class MA(object):
                 center = (cx, cy)
                 return Rectangle(center, x_vec, y_vec, wa, ha)
             elif self.type == "right":
-                return None  # TODO
-ma = MA()
+                return None  # TODO: implement
+
+        def entails(self, ap, entire_time_interval):
+            if entire_time_interval:
+                occupancy = self.overall_occupancy()
+            else:
+                occupancy = self.initial_occupancy()
+            r = interpretation(ap.replace('$', ''))
+            if ap.endswith('$'):
+                if r.intersects(occupancy):
+                    return False
+                else:
+                    return True
+            else:
+                if r.contains(occupancy):
+                    return True
+                else:
+                    return False
