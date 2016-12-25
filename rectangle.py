@@ -2,10 +2,10 @@
 
 """
 We encode rectangles like this:
-    <------wa------->
+    <-------w------->
     +------------------------------+ ^
     |                              | |
-    |               ^ y_unit       | ha
+    |               ^ y_unit       | h
     |               |              | |
     |          center--> x_unit    | v
     |                              |
@@ -46,20 +46,22 @@ class Rectangle(object):
             # |other.h * other.y_unit * l|
             o_hyl = abs(other.h*(other.y_unit[0]*l[0] + other.y_unit[1]*l[1]))
             if tl > self_wxl + self_hyl + o_wxl + o_hyl:
-                return True
-        return False
+                # l is a separating axis, and thus self does not intersect
+                # other
+                return False
+        return True
 
     def contains(self, other):
         # a, b, c, d: The 4 corner points of the other rectangle, in local
         # coordinates
-        a = self.convert_to_local_cs(other.center[0]+other.w,
-                                     other.center[1]+other.h)
-        b = self.convert_to_local_cs(other.center[0]+other.w,
-                                     other.center[1]-other.h)
-        c = self.convert_to_local_cs(other.center[0]-other.w,
-                                     other.center[1]-other.h)
-        d = self.convert_to_local_cs(other.center[0]-other.w,
-                                     other.center[1]+other.h)
+        a = self.convert_to_local_cs((other.center[0]+other.w,
+                                      other.center[1]+other.h))
+        b = self.convert_to_local_cs((other.center[0]+other.w,
+                                      other.center[1]-other.h))
+        c = self.convert_to_local_cs((other.center[0]-other.w,
+                                      other.center[1]-other.h))
+        d = self.convert_to_local_cs((other.center[0]-other.w,
+                                      other.center[1]+other.h))
         abcd_in_self = True
         for p in [a, b, c, d]:
             abcd_in_self = (abcd_in_self and
@@ -73,3 +75,8 @@ class Rectangle(object):
         x = c*(v[0]*self.y_unit[1] + v[1]*self.y_unit[0])
         y = c*(-v[0]*self.x_unit[1] + v[1]*self.x_unit[0])
         return x, y
+
+    def __repr__(self):
+        return ('\nRectangle\n\ncenter: ' + repr(self.center) + '\nx_unit: ' +
+                repr(self.x_unit) + '\ny_unit: ' + repr(self.y_unit) +
+                '\nw: ' + repr(self.w) + '\nh: ' + repr(self.h) + '\n')
