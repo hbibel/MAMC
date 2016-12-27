@@ -46,10 +46,10 @@ class KripkeStructure(object):
             # without the '$'. E.g. the interpretation of 'goal$' is everything
             # but the interpretation of 'goal'.
             self.aps = set(['goal', 'goal$', 'obstacle', 'obstacle$'])
-            self.states[0].add_transition(frozenset(), 1)
+            self.states[0].add_transition(frozenset(), 0)
             self.states[0].add_transition(frozenset(['goal']), 2)
             self.states[0].add_transition(frozenset(['obstacle']), 1)
-            self.states[0].add_transition(frozenset(['goal$']), 0)
+            self.states[0].add_transition(frozenset(['goal$']), 1)
             self.states[0].add_transition(frozenset(['obstacle$']), 0)
             self.states[0].add_transition(frozenset(['goal$', 'obstacle$']), 0)
             self.states[0].add_transition(frozenset(['goal$', 'obstacle']), 1)

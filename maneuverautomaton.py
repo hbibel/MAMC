@@ -27,7 +27,7 @@ class MA(object):
         self.maneuver_types = [go_straight, left_turn, right_turn]
         # self.transitions = None
         self.initial_state = MA.Maneuver(go_straight, init_position, 2)
-        self.accepting_states = None
+        # self.accepting_states = None
         # self.orientation = None
         self.position = init_position
 
@@ -90,12 +90,12 @@ class MA(object):
             start_pos = self.starting_position
             # We overapproximate the occupancy by a rectangle
             if self.type.name == "straight":
-                return Rectangle((start_pos[0] + 2.0*cos(orientation*pi/4),
-                                  start_pos[1] + 2.0*sin(orientation*pi/4)),
+                return Rectangle((start_pos[0] + 2.5*cos(orientation*pi/4),
+                                  start_pos[1] + 2.5*sin(orientation*pi/4)),
                                  (cos(orientation*pi/4),
                                   sin(orientation*pi/4)),
                                  (-sin(orientation*pi/4),
-                                  cos(orientation*pi/4)), 2.5, 0.5)
+                                  cos(orientation*pi/4)), 3.0, 0.5)
             elif self.type.name == "left":
                 # geometry yadda yadda; hard to explain, better
                 # draw it down and check for yourself if you doubt those

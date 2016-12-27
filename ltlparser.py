@@ -55,7 +55,9 @@ Identifier
 
 def parse(input_string):
     token_list = _lex(input_string)
-    # TODO: Save atomic propositions
+    # Saving atomic propositions is not necessary for the current
+    # state of this program, but if the need ever arises, this should be done
+    # here
     return _parse_formula(token_list)
 
 
