@@ -22,15 +22,13 @@ def run_model_checker(canvas):
     draw_rectangle(canvas, interpretation('goal'), green, green)
     draw_rectangle(canvas, interpretation('obstacle'), red, red)
     witness_found, trace = pa.find_witness()
-    x, y = 0.0, 0.0
     if witness_found:
         for qm in trace:
-            x_old, y_old = x, y
-            x, y = qm.starting_position
-            if x_old != 0.0 or y_old != 0.0:
-                draw_dot(canvas, x_old, y_old)
-                draw_dot(canvas, x, y)
-                draw_line(canvas, x_old, y_old, x, y)
+            xs, ys = qm.starting_position
+            xf, yf = qm.final_position
+            draw_dot(canvas, xs, ys)
+            draw_dot(canvas, xf, yf)
+            draw_line(canvas, xs, ys, xf, yf)
             draw_rectangle(canvas, qm.initial_occupancy(), blue, transp)
             draw_rectangle(canvas, qm.overall_occupancy(), blue, transp)
     else:
