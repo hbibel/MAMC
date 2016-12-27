@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# Author: Hannes Bibel (bibel@in.tum.de)
+
 """
 We don't store the states of the product automaton explicitely, since their
 number is infinite.

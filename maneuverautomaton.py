@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# Author: Hannes Bibel (bibel@in.tum.de)
+
 from math import pi, sin, cos
 from rectangle import Rectangle
 from util import interpretation

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
 
-@author: Hannes Bibel
-"""
+# Author: Hannes Bibel (bibel@in.tum.de)
 
 from LTL import LTL
 

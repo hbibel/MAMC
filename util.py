@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# Author: Hannes Bibel (bibel@in.tum.de)
+
 from rectangle import Rectangle
 
 
